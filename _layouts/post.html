@@ -1,0 +1,29 @@
+---
+layout: default
+---
+<article class="post">
+  <header> 
+    <div class="title">
+      <h2>{{ page.title | escape }}</h2>
+    </div>
+    <div class="meta">
+      <time class="published" datetime="{{ page.date }}">{{ page.date | date: "%d %b %Y %R" }}</time>
+      <div class="author"><span class="name">{{ site.author.last_name }}</span><img src="{{ site.author.avatar | prepend: site.baseurl }}" alt="{{ site.author.last_name }}" /></div>
+    </div>
+  </header>
+  {{ content }}
+  
+</article>
+<!-- <ul class="actions pagination">
+  {% if page.previous.url %}
+    <li><a href="{{page.previous.url}}" class="button big previous icon"><i class="fw fas fa-chevron-left"></i> Туда</a></li>
+  {% endif %}
+  {% if page.next.url %}
+    <li><a href="{{page.next.url}}" class="button big next icon">Сюда <i class="fw fas fa-chevron-right"></i></a></li>
+  {% endif %}
+</ul> -->
+
+
+{%include comments.html %}
+
+

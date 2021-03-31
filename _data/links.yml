@@ -1,0 +1,9 @@
+# blog page sections
+- name: JPA
+  href: '/jpa/'
+
+- name: SPRING
+  href: '/spring/'
+
+- name: ML
+  href: '/ml/'
