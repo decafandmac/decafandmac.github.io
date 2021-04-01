@@ -56,11 +56,11 @@ Entity 를 영속성 컨텍스트와 DB에서 삭제</li>
 <p><br /></p>
 <h3 id="영속성-컨텍스트가-entity-를-관리하는-방식은-다음과-같다"><u>영속성 컨텍스트가 Entity 를 관리하는 방식은 다음과 같다.</u></h3>
 
-<ol>
+<ul>
   <li>등록/삭제
 <br />
 <img src="/post-img/jpa/persistence_context_persist.PNG" alt="" /></li>
-</ol>
+</ul>
 
 <p>등록의 경우, persist() 함수를 호출해서 Entity 를 영속성 컨텍스트에서 관리하는 상태로 만든다.<br />
 이때 해당 Entity 는 <code class="language-plaintext highlighter-rouge">1차 캐시</code> 에 저장되고, <code class="language-plaintext highlighter-rouge">쓰기 지연 SQL 저장소</code>에 Insert SQL 이 생성된다.<br />
@@ -73,11 +73,11 @@ Entity 를 영속성 컨텍스트와 DB에서 삭제</li>
 <p>이후 commit() 함수를 호출하면 영속성 컨텍스트 내부에서 <code class="language-plaintext highlighter-rouge">flush</code> 가 발생하고<br /> 
 쓰기 지연 SQL 저장소의 SQL을 DB로 전송한다.</p>
 
-<ol>
+<ul>
   <li>수정
 <br />
 <img src="/post-img/jpa/persistence_context_update.PNG" alt="" /></li>
-</ol>
+</ul>
 
 <p>1차 캐시에 Entity를 저장할 때, 영속성 컨텍스트는 해당 Entity 의 <code class="language-plaintext highlighter-rouge">스냅샷</code>을 따로 저장한다.<br />
 이후 아래처럼 1차캐시에 저장된 Entity 의 속성을 변경하려 할 경우</p>
@@ -92,11 +92,11 @@ Entity 를 영속성 컨텍스트와 DB에서 삭제</li>
 <p><code class="language-plaintext highlighter-rouge">flush</code> 가 발생할 때 <code class="language-plaintext highlighter-rouge">변경감지(Dirty Checking)</code>가 발생하고,<br />
 변경된 내용을 쓰기 지연 SQL 저장소에 update SQL 로 작성한다.</p>
 
-<ol>
+<ul>
   <li>조회
 <br />
 <img src="/post-img/jpa/persistence_context_find.PNG" alt="" /></li>
-</ol>
+</ul>
 
 <p>조회의 경우 1차 캐시에 해당 Entity 가 있는지 우선 체크 한다.<br />
 1차 캐시에 존재할 경우 해당 Entity 를 반환하고,<br />
