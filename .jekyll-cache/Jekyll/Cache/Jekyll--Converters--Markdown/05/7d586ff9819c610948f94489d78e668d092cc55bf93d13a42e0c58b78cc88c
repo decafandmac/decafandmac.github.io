@@ -1,0 +1,6 @@
+I"�<h2 id="영속성-컨텍스트란"><span style="color:red">영속성 컨텍스트란?</span></h2>
+<blockquote>
+  <p>영속성 컨텍스트란 논리적인 개념으로 <code class="language-plaintext highlighter-rouge">"Entity 를 영구 저장하는 환경"</code> 이라는 의미이다.<br />
+어플리케이션과 DB 사이에서 Entity 를 관리하고, EntityManager 를 통해 접근이 가능하다.</p>
+</blockquote>
+:ET
