@@ -59,7 +59,7 @@ em.remove(member);
 <br>
 ### <u>영속성 컨텍스트가 Entity 를 관리하는 방식은 다음과 같다.</u>
 
-1. 등록/삭제
+- 등록/삭제
 <br>
 ![](/post-img/jpa/persistence_context_persist.PNG)
 
@@ -74,7 +74,7 @@ em.remove(member);
 이후 commit() 함수를 호출하면 영속성 컨텍스트 내부에서 `flush` 가 발생하고<br> 
 쓰기 지연 SQL 저장소의 SQL을 DB로 전송한다.
 
-2. 수정
+- 수정
 <br>
 ![](/post-img/jpa/persistence_context_update.PNG)
 
@@ -92,7 +92,7 @@ transaction.commit();
 `flush` 가 발생할 때 `변경감지(Dirty Checking)`가 발생하고,<br>
 변경된 내용을 쓰기 지연 SQL 저장소에 update SQL 로 작성한다.
 
-3. 조회
+- 조회
 <br>
 ![](/post-img/jpa/persistence_context_find.PNG)
 
