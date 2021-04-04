@@ -1,0 +1,61 @@
+I"X<h2 id="persistencexml-의-hibernate-속성을-통해-db-스키마를-어느-시점에-어떻게-생성할-지-지정할-수-있다">persistence.xml 의 hibernate 속성을 통해 DB 스키마를 어느 시점에 어떻게 생성할 지 지정할 수 있다.</h2>
+<p><br /></p>
+
+<ul>
+  <li>create : 테이블 삭제 후 다시 생성(drop + create)</li>
+  <li>create-drop : create 와 같으나, 종료시점에 테이블 drop</li>
+  <li>update : 변경분만 반영</li>
+  <li>validate : Entity 와 Table 이 정상적으로 매핑 되었는지만 확인</li>
+  <li>none : 사용하지 않음</li>
+</ul>
+
+<p>생성되는 ddl 의 경우 persistence.xml 에서 설정한 데이터베이스 방언에 따라 달라진다.<br />
+<code class="language-plaintext highlighter-rouge">-&gt; org.hibernate.dialect.H2Dialect</code></p>
+
+<p>그리고 혹시 모를 미연의 사고를 방지하기 위해 <span style="color:red">운영장비에서는 절대 create, create-drop, update 를 사용하지 않는 것</span>을 추천한다.<br /></p>
+<ul>
+  <li>개발 초기 단계는 create, 또는 update</li>
+  <li>테스트 서버는 update 또는 validate</li>
+  <li>스테이징과 운영 서버는 validate 또는 none</li>
+</ul>
+
+<p><br /></p>
+
+<hr />
+<h2 id="매핑-어노테이션-정리">매핑 어노테이션 정리</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>어노테이션</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>@Column</td>
+      <td>컬럼 매핑</td>
+    </tr>
+    <tr>
+      <td>@Temporal</td>
+      <td>날짜 타입 매핑</td>
+    </tr>
+    <tr>
+      <td>@Enumerated</td>
+      <td>enum 매핑<br /></td>
+    </tr>
+    <tr>
+      <td>ORDINAL을 사용할 경우 Enum 에 사용하는 값이 변경되면 DB에 저장된 값의 의미가 섞임 -&gt; <span style="color:red">(항상 value 값으로는 EnumType.STRING 을 사용한다)</span></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>@Lob</td>
+      <td>BLOB, CLOB 매핑</td>
+    </tr>
+    <tr>
+      <td>@Transient</td>
+      <td>특정 필드를 컬럼에 매핑하지 않음(매핑무시)</td>
+    </tr>
+  </tbody>
+</table>
+:ET
