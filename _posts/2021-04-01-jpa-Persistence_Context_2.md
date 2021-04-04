@@ -19,7 +19,8 @@ preview: 0
 영속성 컨텍스트를 flush 하는 방법은 아래와 같다.
 - em.flush()
 - 트랜젝션 커밋
-- JPQL 쿼리 실행
+- JPQL 등 EntityManager 를 통해 SQL 을 실행하는 경우<br>
+(DB에 내용이 반영되어야 정상적인 결과가 나오기 때문에 쿼리 수행 전 미리 DB에 내용을 반영함)
 
 
 
