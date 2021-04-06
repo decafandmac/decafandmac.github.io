@@ -1,0 +1,25 @@
+I"�<h2 id="기본키-매핑-방법">기본키 매핑 방법</h2>
+
+<ul>
+  <li>직접할당 : @Id 만 사용 -&gt; id 변수에 직접 값 세팅</li>
+  <li>자동생성(@GeneratedValue)
+    <ul>
+      <li>IDENTITY : DB에 위임</li>
+      <li>SEQUENCE : DB 시퀀스 사용(<code class="language-plaintext highlighter-rouge">@SequenceGenerator</code> 필요)</li>
+      <li>TABLE : 키 생성용 테이블 사용(<code class="language-plaintext highlighter-rouge">@TableGenerator</code> 필요)</li>
+      <li>AUTO : 방언에 따라 자동 지정(기본값)</li>
+    </ul>
+  </li>
+</ul>
+
+<ol>
+  <li>
+    <p>IDENTITY 전략
+주로 MySQL, PostgreSQL, SQL Server, DB2 등에서 사용한다.<br />
+IDENTITY 전략의 경우 DB에 위임하기 때문에 DB Insert 시점에 해당 값을 알 수 있고,<br />
+때문에 IDENTITY 전략의 경우 <span style="color:red">persist() 시점에 즉시 INSERT SQL 이 실행된다.</span></p>
+  </li>
+  <li></li>
+</ol>
+
+:ET

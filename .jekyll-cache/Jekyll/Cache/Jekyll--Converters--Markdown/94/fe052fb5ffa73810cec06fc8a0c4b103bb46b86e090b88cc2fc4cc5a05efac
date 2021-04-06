@@ -1,0 +1,88 @@
+I"Y
+<h2 id="기본키-매핑-방법">기본키 매핑 방법</h2>
+
+<ul>
+  <li>직접할당 : @Id 만 사용 -&gt; id 변수에 직접 값 세팅</li>
+  <li>자동생성(@GeneratedValue)
+    <ul>
+      <li>IDENTITY : DB에 위임</li>
+      <li>SEQUENCE : DB 시퀀스 사용(<code class="language-plaintext highlighter-rouge">@SequenceGenerator</code> 필요)</li>
+      <li>TABLE : 키 생성용 테이블 사용(<code class="language-plaintext highlighter-rouge">@TableGenerator</code> 필요)</li>
+      <li>AUTO : 방언에 따라 자동 지정(기본값)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<ol>
+  <li>
+    <p>IDENTITY 전략<br />
+주로 MySQL, PostgreSQL, SQL Server, DB2 등에서 사용한다.<br />
+IDENTITY 전략의 경우 DB에 위임하기 때문에 DB Insert 시점에 해당 값을 알 수 있고,<br />
+때문에 IDENTITY 전략의 경우 <span style="color:red">persist() 시점에 즉시 INSERT SQL 이 실행된다.</span></p>
+  </li>
+  <li>
+    <p>SEQUENCE 전략<br />
+주로 Oracle, PostgreSQL, DB2, H2 등에서 사용한다.<br />
+<span style="color:red">@SequenceGenerator</span> 를 통해 DB시퀀스를 생성하고, 해당 시퀀스의 nextval 를 이용해 세팅한다.</p>
+  </li>
+</ol>
+
+<p><code class="language-plaintext highlighter-rouge">java
+@SequenceGenerator(
+    name = "Member_SEQ_GENERATOR",
+    sequenceName = "MEMBER_SEQ",
+    initialValue = 1,
+    allocationSize = 1
+)
+public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Member_SEQ_GENERATOR")
+    private Long Id;
+}
+</code>java</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>속성</th>
+      <th>설명</th>
+      <th>기본값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>name</td>
+      <td>식별자 생성기 이름(프로그램 내부 이름)</td>
+      <td>필수</td>
+    </tr>
+    <tr>
+      <td>sequenceName</td>
+      <td>DB에 등록되는 시퀀스 이름</td>
+      <td>hibernate_sequence</td>
+    </tr>
+    <tr>
+      <td>initialValue</td>
+      <td>시퀀스 초기값</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>allocationSize</td>
+      <td>시퀀스 증가 값<span style="color:red">(이 값을 반드시 1로 해야 함)</span></td>
+      <td><span style="color:red">50</span></td>
+    </tr>
+    <tr>
+      <td>catalog, scheme</td>
+      <td>DB catalog, scheme 이름</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<ol>
+  <li>TABLE 전략<br />
+주로 Oracle, PostgreSQL, DB2, H2 등에서 사용한다.<br />
+<span style="color:red">@SequenceGenerator</span> 를 통해 DB시퀀스를 생성하고, 해당 시퀀스의 nextval 를 이용해 세팅한다.</li>
+</ol>
+:ET
