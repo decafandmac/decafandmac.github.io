@@ -1,0 +1,239 @@
+I"�8<h2 id="기본키-매핑-방법">기본키 매핑 방법</h2>
+
+<ul>
+  <li>직접할당 : @Id 만 사용 -&gt; id 변수에 직접 값 세팅</li>
+  <li>자동생성(@GeneratedValue)
+    <ul>
+      <li>IDENTITY : DB에 위임</li>
+      <li>SEQUENCE : DB 시퀀스 사용(<code class="language-plaintext highlighter-rouge">@SequenceGenerator</code> 필요)</li>
+      <li>TABLE : 키 생성용 테이블 사용(<code class="language-plaintext highlighter-rouge">@TableGenerator</code> 필요)</li>
+      <li>AUTO : 방언에 따라 자동 지정(기본값)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<ul>
+  <li>
+    <p><u>IDENTITY 전략</u><br />
+주로 MySQL, PostgreSQL, SQL Server, DB2 등에서 사용한다.<br />
+IDENTITY 전략의 경우 DB에 위임하기 때문에 DB Insert 시점에 해당 값을 알 수 있고,<br />
+때문에 IDENTITY 전략의 경우 <span style="color:red">persist() 시점에 즉시 INSERT SQL 이 실행된다.</span></p>
+  </li>
+  <li>
+    <p><u>SEQUENCE 전략</u><br />
+주로 Oracle, PostgreSQL, DB2, H2 등에서 사용한다.<br />
+이름을 지정하지 않을 경우 기본 시퀀스가 생성 되고<br />
+임의의 시퀀스를 사용하고자 할 경우 <span style="color:red">@SequenceGenerator</span> 를 통해 DB시퀀스를 생성하고, 해당 시퀀스의 nextval 값에 의해 세팅된다.<br />
+<br />
+persist() 시점에 DB에 <span style="color:red">시퀀스</span>만 조회해서 next val을 가져오고 이 값을 이용해서 id 를 세팅하고 영속성 컨텍스트에 넣는다.<br />
+-&gt; <span style="color:red">실제 영속성 컨텍스트에 객체를 넣을 때는 insert 쿼리가 나가지 않음</span></p>
+  </li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SequenceGenerator</span><span class="o">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">"MEMBER_SEQ_GENERATOR"</span><span class="o">,</span>
+    <span class="n">sequenceName</span> <span class="o">=</span> <span class="s">"MEMBER_SEQ"</span><span class="o">,</span>
+    <span class="n">initialValue</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span>
+    <span class="n">allocationSize</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">SEQUENCE</span><span class="o">,</span> <span class="n">generator</span> <span class="o">=</span> <span class="s">"MEMBER_SEQ_GENERATOR"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="nc">Id</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+    <span class="nc">Member</span> <span class="n">member1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Member</span><span class="o">();</span>
+    <span class="n">member1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"member1"</span><span class="o">);</span>
+
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"==========="</span><span class="o">);</span>
+    <span class="n">em</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">member1</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"==========="</span><span class="o">);</span>
+
+    <span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// persist() 시점에는 시퀀스만 호출함</span>
+<span class="c1">// commit() 시점에 insert 실행</span>
+<span class="c1">// ===========</span>
+<span class="c1">// Hibernate: </span>
+<span class="c1">//     call next value for hibernate_sequence</span>
+<span class="c1">// ===========</span>
+<span class="c1">// Hibernate: </span>
+<span class="c1">//     /* insert domain.Member</span>
+<span class="c1">//         */ insert </span>
+<span class="c1">//         into</span>
+<span class="c1">//             Member</span>
+<span class="c1">//             (name, id) </span>
+<span class="c1">//         values</span>
+<span class="c1">//             (?, ?)</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>속성</th>
+      <th>설명</th>
+      <th>기본값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>name</td>
+      <td>식별자 생성기 이름(프로그램 내부 이름)</td>
+      <td>필수</td>
+    </tr>
+    <tr>
+      <td>sequenceName</td>
+      <td>DB에 등록되는 시퀀스 이름</td>
+      <td>hibernate_sequence</td>
+    </tr>
+    <tr>
+      <td>initialValue</td>
+      <td>시퀀스 초기값</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>allocationSize</td>
+      <td>시퀀스 증가 값</td>
+      <td><span style="color:red">50</span></td>
+    </tr>
+    <tr>
+      <td>catalog, scheme</td>
+      <td>DB catalog, scheme 이름</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>allocationSize 가 1 이상일 경우, <span style="color:red">지정해놓은 값 만큼 DB에서 미리 값을 올려 놓고</span><br />
+그 사이 구간의 값은 DB 호출 없이 사용한다.(Table 전략도 동일함)<br />
+이를 통해 DB에 접근하는 횟수를 줄일 수 있기 때문에 성능 최적화가 가능할 수 있다.
+<br /><br />
+(ex) allocationSize = 2 인 경우, 아래처럼 작동한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+    <span class="nc">Member</span> <span class="n">member1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Member</span><span class="o">();</span>
+    <span class="n">member1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"member1"</span><span class="o">);</span>
+
+    <span class="nc">Member</span> <span class="n">member2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Member</span><span class="o">();</span>
+    <span class="n">member2</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"member2"</span><span class="o">);</span>
+
+    <span class="nc">Member</span> <span class="n">member3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Member</span><span class="o">();</span>
+    <span class="n">member3</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"member3"</span><span class="o">);</span>
+
+    <span class="nc">Member</span> <span class="n">member4</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Member</span><span class="o">();</span>
+    <span class="n">member4</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"member4"</span><span class="o">);</span>
+
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"===========1"</span><span class="o">);</span>
+    <span class="n">em</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">member1</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"===========2"</span><span class="o">);</span>
+    <span class="n">em</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">member2</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"===========3"</span><span class="o">);</span>
+    <span class="n">em</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">member3</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"===========4"</span><span class="o">);</span>
+    <span class="n">em</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">member4</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"===========5"</span><span class="o">);</span>
+
+    <span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+
+<span class="c1">// ===========1</span>
+<span class="c1">// Hibernate: </span>
+<span class="c1">//     call next value for MEMBER_SEQ -&gt; 최초 시퀀스 1 조회</span>
+<span class="c1">// Hibernate: </span>
+<span class="c1">//     call next value for MEMBER_SEQ -&gt; (1 + allocationSize) 값 조회 -&gt; 3</span>
+<span class="c1">// ===========2 -&gt; 미리 조회해온 시퀀스 값 사용 (DB 접근 안함)</span>
+<span class="c1">// ===========3 -&gt; 미리 조회해온 시퀀스 값 사용 (DB 접근 안함)</span>
+<span class="c1">// ===========4 -&gt; 미리 조회해온 시퀀스 값을 넘어섰기 때문에 한번 더 조회 함</span>
+<span class="c1">// Hibernate: </span>
+<span class="c1">//     call next value for MEMBER_SEQ</span>
+<span class="c1">// ===========5</span>
+<span class="c1">// Hibernate: </span>
+<span class="c1">//     /* insert domain.Member</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><u>TABLE 전략</u><br />
+키 생성 전용 테이블을 하나 만들어서 시퀀스와 유사하게 작동하도록 하는 방식이다.<br />
+모든 DB에 적용 가능하다는 장점은 있지만<br />
+키를 생성하기 위해 해당 테이블에 DML 이 이루어져야 하기 때문에 성능이 떨어지는 단점이 있다.</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@TableGenerator</span><span class="o">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">"MEMBER_SEQ_GENERATOR"</span><span class="o">,</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s">"MY_SEQUENCES"</span><span class="o">,</span>
+    <span class="n">pkColumnValue</span> <span class="o">=</span> <span class="s">"MEMBER_SEQ"</span><span class="o">,</span>
+    <span class="n">allocationSize</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">TALBE</span><span class="o">,</span> <span class="n">generator</span> <span class="o">=</span> <span class="s">"MEMBER_SEQ_GENERATOR"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="nc">Id</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위와 같은 코드가 실행되면, 아래의 create 문이 생성된다.(h2 DB 기준)<br /></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">create</span> <span class="k">table</span> <span class="n">MY_SEQUENCE</span> <span class="p">(</span>
+    <span class="n">sequence_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">next_val</span> <span class="nb">bigint</span><span class="p">,</span>
+    <span class="k">primary</span> <span class="k">key</span> <span class="p">(</span><span class="n">sequence_name</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+<p>그리고 값으로 sequence_name 에는 <code class="language-plaintext highlighter-rouge">MEMBER_SEQ</code>, next_val에는 <code class="language-plaintext highlighter-rouge">1(초기값)</code>이 들어간다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>속성</th>
+      <th>설명</th>
+      <th>기본값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>name</td>
+      <td>식별자 생성기 이름(프로그램 내부 이름)</td>
+      <td>필수</td>
+    </tr>
+    <tr>
+      <td>table</td>
+      <td>키 생성 테이블명</td>
+      <td>hibernate_sequences</td>
+    </tr>
+    <tr>
+      <td>pkColumnName</td>
+      <td>시퀀스 컬럼명</td>
+      <td>sequence_name</td>
+    </tr>
+    <tr>
+      <td>pkColumnValue</td>
+      <td>키로 사용할 값 이름</td>
+      <td>엔티티 이름</td>
+    </tr>
+    <tr>
+      <td>initialValue</td>
+      <td>초기값</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>allocationSize</td>
+      <td>시퀀스 한번 호출에 증가하는 수(성능 최적화에 사용됨)</td>
+      <td><span style="color:red">50</span></td>
+    </tr>
+    <tr>
+      <td>catalog, scheme</td>
+      <td>DB catalog, scheme 이름</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>uniqueConstraint(DDL)</td>
+      <td>유니크 제약 조건을 지정할 수 있음</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+:ET
