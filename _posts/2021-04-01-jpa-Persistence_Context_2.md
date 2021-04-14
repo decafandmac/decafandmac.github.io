@@ -51,3 +51,5 @@ Member b = em.find(Member.class, "member1");
 
 System.out.println( a == b);
 ```
+
+> Reference : <a href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">인프런 [자바 ORM 표준 JPA 프로그래밍 - 기본편] by 김영한</a>

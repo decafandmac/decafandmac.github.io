@@ -103,3 +103,5 @@ transaction.commit();
 
 <br>
 ## <span style="color:red">to be continued...</span>
+
+> Reference : <a href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">인프런 [자바 ORM 표준 JPA 프로그래밍 - 기본편] by 김영한</a>

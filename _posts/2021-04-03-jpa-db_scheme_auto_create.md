@@ -39,3 +39,5 @@ preview: 0
 |@Enumerated|enum 매핑<br>ORDINAL을 사용할 경우 Enum 에 사용하는 값이 변경되면 DB에 저장된 값의 의미가 섞임<br> -> <span style="color:red">항상 value 값으로는 EnumType.STRING 을 사용한다</span>|
 |@Lob|BLOB, CLOB 매핑|
 |@Transient|특정 필드를 컬럼에 매핑하지 않음(매핑무시)|
+
+> Reference : <a href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">인프런 [자바 ORM 표준 JPA 프로그래밍 - 기본편] by 김영한</a>
