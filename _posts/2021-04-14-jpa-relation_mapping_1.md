@@ -54,7 +54,7 @@ Member 테이블의 FK 관리를 Team 객체에서 하고 있기 때문에,<br>
 객체의 연관관계는 DB와는 다르게 <span style="color:red">단방향, 양방향</span>이라는 방향성이 존재한다.<br>
 DB의 경우 한쪽 테이블에 FK 가 존재하면 어느 테이블에서든 join 을 통해 서로간에 참조가 가능하지만<br>
 객체의 경우 참조하고자 하는 객체의 참조가 존재하지 않으면 상대방을 참조할 수 없다.<br>
-즉, <span style="color:red">양방향 연관관계는 단방향 연관관계 2개가 합쳐진 모양</span>이 된다.<br>
+즉, <span style="color:red">양방향 연관관계는 단방향 연관관계 2개가 합쳐진 모양</span>이 된다.
 
 ![](/post-img/jpa/relation_mapping_N_1_dual.PNG)
 ```java
