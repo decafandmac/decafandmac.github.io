@@ -1,5 +1,0 @@
-I"x<h2 id="연관관계-매핑">연관관계 매핑</h2>
-
-<p>일반적으로 DB테이블은 FK 를 이용한 Join 을 통해 서로 간에 연관관계를 맺는다.<br />
-이러한 내용을 객체지향 모델링에 반영하여 객체의 참조와 DB의 FK를 반영하는 것을 <code class="language-plaintext highlighter-rouge">연관관계 매핑</code>이라 한다.</p>
-:ET

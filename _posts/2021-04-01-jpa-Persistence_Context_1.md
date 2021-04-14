@@ -7,6 +7,7 @@ icon: www
 keywords: jpa, persistence context, persistence
 image: 
 preview: 0
+comments: true
 ---
 
 ## <span style="color:red">영속성 컨텍스트란?</span>

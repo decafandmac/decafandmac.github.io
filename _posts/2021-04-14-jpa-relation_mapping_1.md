@@ -7,6 +7,7 @@ icon: www
 keywords: jpa, ManyToOne, OneToMany, OneToOne, ManyToMany, Relation, Relation Mapping, mappedBy
 image: 
 preview: 0
+comments: true
 ---
 
 ## 연관관계 매핑

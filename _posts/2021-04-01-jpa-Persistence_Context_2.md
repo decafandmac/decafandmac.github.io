@@ -7,6 +7,7 @@ icon: www
 keywords: jpa, persistence context, persistence
 image: 
 preview: 0
+comments: true
 ---
 
 ### <u>flush</u>

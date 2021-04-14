@@ -1,4 +1,4 @@
-I"�<h2 id="연관관계-매핑">연관관계 매핑</h2>
+I"�<h2 id="연관관계-매핑">연관관계 매핑</h2>
 
 <blockquote>
   <p>일반적으로 DB테이블은 FK 를 이용한 Join 을 통해 서로 간에 연관관계를 맺는다.<br />
@@ -44,7 +44,7 @@
 <p>객체의 연관관계는 DB와는 다르게 <span style="color:red">단방향, 양방향</span>이라는 방향성이 존재한다.<br />
 DB의 경우 한쪽 테이블에 FK 가 존재하면 어느 테이블에서든 join 을 통해 서로간에 참조가 가능하지만<br />
 객체의 경우 참조하고자 하는 객체의 참조가 존재하지 않으면 상대방을 참조할 수 없다.<br />
-즉, <span style="color:red">양방향 연관관계는 단방향 연관관계 2개가 합쳐진 모양</span>이 된다.<br /></p>
+즉, <span style="color:red">양방향 연관관계는 단방향 연관관계 2개가 합쳐진 모양</span>이 된다.</p>
 
 <p><img src="/post-img/jpa/relation_mapping_N_1_dual.PNG" alt="" /></p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span> <span class="o">{</span>
@@ -58,12 +58,14 @@ DB의 경우 한쪽 테이블에 FK 가 존재하면 어느 테이블에서든 j
 <p>위 예시를 보면 2개의 단방향 연관관계가 합쳐져서 서로간의 참조가 가능한 양방향 연관관계를 생성하고 있음을 알 수 있다.<br /></p>
 
 <p>양방향 연관관계 시 흔히 하는 실수로<br />
-한 쪽에만(주로 연관관계의 주인이 아닌 객체) 값을 입력하는 경우가 있다.<br />
-객체지향 관점에서 봤을 때 양쪽 모두 값을 입력하는 것이 맞기 때문에<br />
+한 쪽에만(주로 연관관계의 주인이 아닌 객체) 값을 입력하는 경우가 있다.<br /></p>
+
+<p>객체지향 관점에서 봤을 때 양쪽 모두 값을 입력하는 것이 맞기 때문에<br />
 아래 예시와 같이 편의 메서드를 만들어서 양쪽에 입력할 수 있도록 하자.<br /></p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Team</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Member</span><span class="o">&gt;</span> <span class="n">members</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Member</span><span class="o">&gt;();</span>
 
+    <span class="c1">// 양쪽에 모두 값 입력</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addMember</span><span class="o">(</span><span class="nc">Member</span> <span class="n">member</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">members</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">member</span><span class="o">);</span>
         <span class="n">member</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
@@ -73,7 +75,10 @@ DB의 경우 한쪽 테이블에 FK 가 존재하면 어느 테이블에서든 j
 
 <p>그리고,<br />
 일반적으로는 양방향 관계의 경우 고려해야 할 부분들이 많기 때문에<br />
-일단은 기본적으로 단방향 관계로 모두 세팅하고, <em>*필요할 경우에만 양방향 관계를 추가*</em> 하는 것이 좋다.</p>
+일단은 기본적으로 단방향 관계로 모두 세팅하고, <strong><em>필요할 경우에만 양방향 관계를 추가</em></strong> 하는 것이 좋다.</p>
+
+<p><br /></p>
+<h2 id="to-be-continued"><span style="color:red">to be continued…</span></h2>
 
 <blockquote>
   <p>Reference : <a href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">인프런 [자바 ORM 표준 JPA 프로그래밍 - 기본편] by 김영한</a></p>

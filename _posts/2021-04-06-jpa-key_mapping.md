@@ -7,6 +7,7 @@ icon: www
 keywords: jpa, GeneratedValue, SequenceGenerator, GenerationType, strategy
 image: 
 preview: 0
+comments: true
 ---
 
 ## 기본키 매핑 방법

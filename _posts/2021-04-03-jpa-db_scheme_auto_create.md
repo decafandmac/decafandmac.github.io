@@ -7,6 +7,7 @@ icon: www
 keywords: jpa, hibernate, hbm2ddl
 image: 
 preview: 0
+comments: true
 ---
 
 ## persistence.xml 의 hibernate 속성을 통해 DB 스키마를 어느 시점에 어떻게 생성할 지 지정할 수 있다.
