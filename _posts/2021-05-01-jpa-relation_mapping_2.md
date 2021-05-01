@@ -102,5 +102,127 @@ FK 가 존재하는 쪽이 연관관계의 주인이 되고, 반대쪽 테이블
 ### 다대다_정규테이블 승격
 ![](/post-img/jpa/many_to_many_2.PNG)
 
+> 주 테이블에 FK가 있는 경우 LAZY 로딩 테스트
+
+```java
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter @Setter
+public class Member {
+    @Id @GeneratedValue
+    @Column(name = "member_id")
+    private Long id;
+    private String name;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "locker_id")
+    private Locker locker;
+
+    public Member(String name) {
+        this.name = name;
+    }
+}
+
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter @Setter
+public class Locker {
+    @Id @GeneratedValue
+    @Column(name = "locker_id")
+    private Long id;
+    private Long number;
+
+    public Locker(Long number) {
+        this.number = number;
+    }
+}
+
+
+Locker locker1 = new Locker(1L);
+lockerRepository.save(locker1);
+
+Member member1 = new Member("member1");
+member1.setLocker(locker1);
+memberRepository.save(member1);
+
+em.flush();
+em.clear();
+
+Member findMember = memberRepository.findById(member1.getId()).get();
+/**
+ * Locker 의 Proxy 객체(결과 -> findMember = class com.decafandmac.jpatestproject.entity.Locker$HibernateProxy$zY23iqIS)
+ */
+System.out.println("findMember = " + findMember.getLocker().getClass());
+/**
+ * Locker 의 정보를 조회하려 할때 실제 객체
+ */
+System.out.println("findMember = " + findMember.getLocker().getNumber());
+```
+
+> 대상 테이블에 FK가 있는 경우 LAZY로 선언 되었지만 EAGER로 로딩 테스트
+
+```java
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter @Setter
+public class Member {
+    @Id @GeneratedValue
+    @Column(name = "member_id")
+    private Long id;
+    private String name;
+
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    private Locker locker;
+
+    public Member(String name) {
+        this.name = name;
+    }
+
+    public void addLocker(Locker locker) {
+        this.locker = locker;
+        locker.setMember(this);
+    }
+}
+
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter @Setter
+public class Locker {
+    @Id @GeneratedValue
+    @Column(name = "locker_id")
+    private Long id;
+    private Long number;
+
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public Locker(Long number) {
+        this.number = number;
+    }
+}
+
+
+Locker locker1 = new Locker(1L);
+lockerRepository.save(locker1);
+
+Member member1 = new Member("member1");
+member1.addLocker(locker1);
+memberRepository.save(member1);
+
+em.flush();
+em.clear();
+
+Member findMember = memberRepository.findById(member1.getId()).get();
+/**
+ * Locker 의 실제 객체(결과 -> findMember = class com.decafandmac.jpatestproject.entity.Locker)
+ */
+System.out.println("findMember = " + findMember.getLocker().getClass());
+/**
+ * Locker 의 정보를 조회하려 할때 실제 객체
+ */
+System.out.println("findMember = " + findMember.getLocker().getNumber());
+```
+
 
 > Reference : <a href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">인프런 [자바 ORM 표준 JPA 프로그래밍 - 기본편] by 김영한</a>
