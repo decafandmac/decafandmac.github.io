@@ -1,4 +1,4 @@
-I"zK<h2 id="다대일">다대일</h2>
+I"fK<h2 id="다대일">다대일</h2>
 <blockquote>
   <p>@ManyToOne</p>
 </blockquote>
@@ -83,30 +83,11 @@ Member 조회 시 에서 Locker 의 프록시 객체를 생성하기 위해서�
 이 때문에 지연로딩이 불가능 하다.<br /></li>
     </ul>
 
-    <h2 id="다대다">다대다</h2>
     <blockquote>
-      <p>@ManyToMany</p>
+      <p>주 테이블에 FK가 있는 경우 LAZY 로딩 테스트</p>
     </blockquote>
   </li>
 </ul>
-
-<p>일반적으로 관계형 DB는 정규화된 테이블 2개로는 다대다를 표현할 수 없기 때문에<br />
-중간에 연결테이블을 추가해서 표현할 수 있다.<br /></p>
-
-<h3 id="다대다-1">다대다</h3>
-<p><img src="/post-img/jpa/many_to_many.PNG" alt="" /></p>
-
-<p>다대다의 경우 <span style="color:red">@JoinTable</span> 어노테이션을 사용해서 연결테이블의 명칭을 지정하고, 양방향/단방향 모두 가능하다.<br />
-하지만 다대다의 경우 거의 사용되지 않는데, 이유는 <span style="color:red">연결테이블에는 양쪽 테이블의 ID 이외에는 다른 컬럼을 추가할 수 없기 때문</span>이다.<br />
-따라서 만약 다대다 관계가 필요할 경우에는, <span style="color:red">연결테이블을 정식 엔티티로 승격</span> 시키고<br />
-<span style="color:red">@OneToMany, @ManyToOne 으로 양쪽으로 관계를 맺는 방식</span>을 사용 한다.<br /></p>
-
-<h3 id="다대다_정규테이블-승격">다대다_정규테이블 승격</h3>
-<p><img src="/post-img/jpa/many_to_many_2.PNG" alt="" /></p>
-
-<blockquote>
-  <p>주 테이블에 FK가 있는 경우 LAZY 로딩 테스트</p>
-</blockquote>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
 <span class="nd">@NoArgsConstructor</span><span class="o">(</span><span class="n">access</span> <span class="o">=</span> <span class="nc">AccessLevel</span><span class="o">.</span><span class="na">PROTECTED</span><span class="o">)</span>
@@ -227,6 +208,25 @@ Member 조회 시 에서 Locker 의 프록시 객체를 생성하기 위해서�
  */</span>
 <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"findMember = "</span> <span class="o">+</span> <span class="n">findMember</span><span class="o">.</span><span class="na">getLocker</span><span class="o">().</span><span class="na">getNumber</span><span class="o">());</span>
 </code></pre></div></div>
+
+<p>## 다대다</p>
+<blockquote>
+  <p>@ManyToMany</p>
+</blockquote>
+
+<p>일반적으로 관계형 DB는 정규화된 테이블 2개로는 다대다를 표현할 수 없기 때문에<br />
+중간에 연결테이블을 추가해서 표현할 수 있다.<br /></p>
+
+<h3 id="다대다">다대다</h3>
+<p><img src="/post-img/jpa/many_to_many.PNG" alt="" /></p>
+
+<p>다대다의 경우 <span style="color:red">@JoinTable</span> 어노테이션을 사용해서 연결테이블의 명칭을 지정하고, 양방향/단방향 모두 가능하다.<br />
+하지만 다대다의 경우 거의 사용되지 않는데, 이유는 <span style="color:red">연결테이블에는 양쪽 테이블의 ID 이외에는 다른 컬럼을 추가할 수 없기 때문</span>이다.<br />
+따라서 만약 다대다 관계가 필요할 경우에는, <span style="color:red">연결테이블을 정식 엔티티로 승격</span> 시키고<br />
+<span style="color:red">@OneToMany, @ManyToOne 으로 양쪽으로 관계를 맺는 방식</span>을 사용 한다.<br /></p>
+
+<h3 id="다대다_정규테이블-승격">다대다_정규테이블 승격</h3>
+<p><img src="/post-img/jpa/many_to_many_2.PNG" alt="" /></p>
 
 <blockquote>
   <p>Reference : <a href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">인프런 [자바 ORM 표준 JPA 프로그래밍 - 기본편] by 김영한</a></p>

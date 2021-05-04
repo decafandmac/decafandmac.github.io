@@ -85,24 +85,7 @@ FK 가 존재하는 쪽이 연관관계의 주인이 되고, 반대쪽 테이블
   <span style="color:red">실제 Member 테이블에는 Locker 와 관련된 컬럼이 없기 때문에 항상 Locker 를 같이 조회 해서 Member 와 연결이 되는지를 확인</span>해야 한다.<br>
   이 때문에 지연로딩이 불가능 하다.<br>
 
-  ## 다대다
-> @ManyToMany
-
-일반적으로 관계형 DB는 정규화된 테이블 2개로는 다대다를 표현할 수 없기 때문에<br>
-중간에 연결테이블을 추가해서 표현할 수 있다.<br>
-
-### 다대다
-![](/post-img/jpa/many_to_many.PNG)
-
-다대다의 경우 <span style="color:red">@JoinTable</span> 어노테이션을 사용해서 연결테이블의 명칭을 지정하고, 양방향/단방향 모두 가능하다.<br>
-하지만 다대다의 경우 거의 사용되지 않는데, 이유는 <span style="color:red">연결테이블에는 양쪽 테이블의 ID 이외에는 다른 컬럼을 추가할 수 없기 때문</span>이다.<br>
-따라서 만약 다대다 관계가 필요할 경우에는, <span style="color:red">연결테이블을 정식 엔티티로 승격</span> 시키고<br>
-<span style="color:red">@OneToMany, @ManyToOne 으로 양쪽으로 관계를 맺는 방식</span>을 사용 한다.<br>
-
-### 다대다_정규테이블 승격
-![](/post-img/jpa/many_to_many_2.PNG)
-
-> 주 테이블에 FK가 있는 경우 LAZY 로딩 테스트
+  > 주 테이블에 FK가 있는 경우 LAZY 로딩 테스트
 
 ```java
 @Entity
@@ -223,6 +206,23 @@ System.out.println("findMember = " + findMember.getLocker().getClass());
  */
 System.out.println("findMember = " + findMember.getLocker().getNumber());
 ```
+
+  ## 다대다
+> @ManyToMany
+
+일반적으로 관계형 DB는 정규화된 테이블 2개로는 다대다를 표현할 수 없기 때문에<br>
+중간에 연결테이블을 추가해서 표현할 수 있다.<br>
+
+### 다대다
+![](/post-img/jpa/many_to_many.PNG)
+
+다대다의 경우 <span style="color:red">@JoinTable</span> 어노테이션을 사용해서 연결테이블의 명칭을 지정하고, 양방향/단방향 모두 가능하다.<br>
+하지만 다대다의 경우 거의 사용되지 않는데, 이유는 <span style="color:red">연결테이블에는 양쪽 테이블의 ID 이외에는 다른 컬럼을 추가할 수 없기 때문</span>이다.<br>
+따라서 만약 다대다 관계가 필요할 경우에는, <span style="color:red">연결테이블을 정식 엔티티로 승격</span> 시키고<br>
+<span style="color:red">@OneToMany, @ManyToOne 으로 양쪽으로 관계를 맺는 방식</span>을 사용 한다.<br>
+
+### 다대다_정규테이블 승격
+![](/post-img/jpa/many_to_many_2.PNG)
 
 
 > Reference : <a href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">인프런 [자바 ORM 표준 JPA 프로그래밍 - 기본편] by 김영한</a>
