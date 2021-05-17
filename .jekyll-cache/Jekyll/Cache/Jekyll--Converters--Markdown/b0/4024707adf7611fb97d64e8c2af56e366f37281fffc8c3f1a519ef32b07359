@@ -1,0 +1,32 @@
+I"L<h2 id="정적-컨텐츠-호출">정적 컨텐츠 호출</h2>
+
+<p><img src="/post-img/spring/work_flow_basic_static.PNG" alt="" /></p>
+
+<p>요청한 내용에 해당하는 컨트롤러가 존재하지 않을 경우 정적 컨텐츠 탐색<br />
+<br /></p>
+
+<h2 id="mvc와-템플릿-엔진">MVC와 템플릿 엔진</h2>
+
+<p><img src="/post-img/spring/work_flow_basic_mvc.PNG" alt="" /></p>
+
+<p>컨트롤러가 존재하고, 해당 컨트롤러에서 문자열을 리턴할 경우, viewResolver 가 화면을 찾아 처리함<br />
+기본은 <span style="color:red">resuerces 하위 templates 폴더의 리턴문자열.html</span> 대상을 찾는다.<br />
+<br /></p>
+
+<h2 id="api">API</h2>
+
+<p><img src="/post-img/spring/work_flow_basic_api.PNG" alt="" /></p>
+
+<h3 id="responsebody-문자-반환">@ResponseBody 문자 반환</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"hello-spring"</span><span class="o">)</span>
+<span class="nd">@ResponseBody</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">helloSpring</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">"hello "</span> <span class="o">+</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>@ResponseBody 를 사용할 경우 viewResolver 를 사용하지 않는다.<br />
+대신 http 의 body 영역에 문자의 내용을 직접 반환한다.<br />
+<br /></p>
+
+<h3 id="responsebody-객체-반환">@ResponseBody 객체 반환</h3>
+:ET
