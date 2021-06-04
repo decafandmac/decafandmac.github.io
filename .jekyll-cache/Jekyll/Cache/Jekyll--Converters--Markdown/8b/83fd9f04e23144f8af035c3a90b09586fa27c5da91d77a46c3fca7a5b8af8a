@@ -1,0 +1,19 @@
+I"�<h2 id="스프링-컨테이너-생성-과정">스프링 컨테이너 생성 과정</h2>
+
+<h3 id="1-스프링-컨테이너-생성">1. 스프링 컨테이너 생성</h3>
+
+<p><img src="/post-img/spring/create_container_1.PNG" alt="" /></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ApplicationContext</span> <span class="n">ac</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AnnotationConfigApplicationConatext</span><span class="o">(</span><span class="nc">AppConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>스프링 컨테이너 <span style="color:red"><code class="language-plaintext highlighter-rouge">ApplicationContext</code></span> 인터페이스의 구현체인 <span style="color:red"><code class="language-plaintext highlighter-rouge">AnnotationConfigApplicationConatext</code></span>를 통해 컨테이너를 생성한다.<br />
+이는 어노테이션 기반으로 생성한 예시이고, XML 기반으로도 생성은 가능하다.<br />
+컨테이너 생성 시 구성 정보를 지정해 주어야 한다.(샘플로 AppConfig.class)<br /></p>
+
+<h3 id="2-스프링-빈-등록">2. 스프링 빈 등록</h3>
+
+<p><img src="/post-img/spring/create_container_2.PNG" alt="" /></p>
+
+<p>스프링 컨테이너는 파라미터로 넘어온 클래스 정보를 사용해서 빈을 등록한다.</p>
+:ET

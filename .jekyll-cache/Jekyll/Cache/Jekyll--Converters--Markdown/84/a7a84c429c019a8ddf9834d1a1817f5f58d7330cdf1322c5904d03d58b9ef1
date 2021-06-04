@@ -1,0 +1,46 @@
+I"�<h2 id="스프링-컨테이너-생성-과정">스프링 컨테이너 생성 과정</h2>
+
+<h3 id="1-스프링-컨테이너-생성">1. 스프링 컨테이너 생성</h3>
+
+<p><img src="/post-img/spring/create_container_1.PNG" alt="" /></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ApplicationContext</span> <span class="n">ac</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AnnotationConfigApplicationConatext</span><span class="o">(</span><span class="nc">AppConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>스프링 컨테이너 <span style="color:red"><code class="language-plaintext highlighter-rouge">ApplicationContext</code></span> 인터페이스의 구현체인 <span style="color:red"><code class="language-plaintext highlighter-rouge">AnnotationConfigApplicationConatext</code></span>를 통해 컨테이너를 생성한다.<br />
+이는 어노테이션 기반으로 생성한 예시이고, XML 기반으로도 생성은 가능하다.<br />
+컨테이너 생성 시 구성 정보를 지정해 주어야 한다.(샘플로 AppConfig.class)<br />
+<br /></p>
+
+<h3 id="2-스프링-빈-등록">2. 스프링 빈 등록</h3>
+
+<p><img src="/post-img/spring/create_container_2.PNG" alt="" /></p>
+
+<p>스프링 컨테이너는 파라미터로 넘어온 클래스 정보를 사용해서 빈을 등록한다.<br />
+<br /></p>
+
+<h3 id="3-스프링-빈-의존관계-설정---준비">3. 스프링 빈 의존관계 설정 - 준비</h3>
+
+<p><img src="/post-img/spring/create_container_3.PNG" alt="" /></p>
+
+<p><br /></p>
+
+<h3 id="4-스프링-빈-의존관계-설정---완료">4. 스프링 빈 의존관계 설정 - 완료</h3>
+
+<p><img src="/post-img/spring/create_container_4.PNG" alt="" /></p>
+
+<p>스프링 컨테이너는 설정정보를 참고해서 <span style="color:red"><code class="language-plaintext highlighter-rouge">의존관계(DI)를 주입</code></span>한다.<br />
+일반적으로 스프링은 빈을 생성하고, 의존관계를 주입하는 단계가 나누어져 있다.<br />
+하지만 이렇게 자바 코드로 스프링 빈을 등록할 경우 생성자를 호출하면서 의존관계 주입도 한번에 처리된다.<br /></p>
+
+<h2 id="스프링-컨테이너와-싱글톤">스프링 컨테이너와 싱글톤</h2>
+<p>스프링 컨테이너는 싱글톤 레지스트리이기 때문에 스프링 빈이 싱글톤이 되도록 보장해 주어야 한다.<br />
+하지만 스프링이 자바 코드를 조작할 수는 없기 때문에 클래스의 바이트코드 조작 라이브러리를 사용한다.<br /></p>
+
+<p><img src="/post-img/spring/singleton_1.PNG" alt="" />
+<img src="/post-img/spring/singleton_2.PNG" alt="" /></p>
+
+<blockquote>
+  <p>Reference : <a href="https://www.inflearn.com/course/스프링-핵심-원리-기본편">인프런 [스프링 핵심 원리 - 기본편] by 김영한</a></p>
+</blockquote>
+:ET

@@ -1,0 +1,13 @@
+I"<p><img src="/post-img/spring/bean_factory_hierarchy.PNG" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">BeanFactory 는 스프링 컨테이너의 최상위 인터페이스</code>이다. 스프링 빈을 조회/관리하는 역할을 담당하고, getBean()을 제공한다.<br />
+하지만 어플리케이션을 개발할때에는 빈에 대한 조회/관리 이외에도 많은 기능을 필요로 한다.<br />
+때문에 일반적으로 <code class="language-plaintext highlighter-rouge">여러 인터페이스를 상속받아서 기능을 제공하는 ApplicationContext 를 주로 사용</code>한다.<br /></p>
+
+<ul>
+  <li>MessageSource</li>
+  <li>EnvironmentCapable</li>
+  <li>ApplicationEventPublisher</li>
+  <li>ResourceLoader</li>
+</ul>
+:ET

@@ -23,4 +23,7 @@ comments: true
 <br>
 예시로, 위의 그림처럼 클라이언트인 MemberService 는 역할을 담당하는 MemberRepository 인터페이스의 save() 만 바라보면 된다.<br>
 인터페이스 구현이 Memory 를 사용하던, JDBC를 사용하던 클라이언트 입장에서는 변경되는 부분이 없다.<br>
-이러한 방식을 통해 유연한 프로그래밍이 가능해 진다.
+이러한 방식을 통해 유연한 프로그래밍이 가능해 진다.<br>
+<br>
+
+> Reference : <a href="https://www.inflearn.com/course/스프링-핵심-원리-기본편">인프런 [스프링 핵심 원리 - 기본편] by 김영한</a>
