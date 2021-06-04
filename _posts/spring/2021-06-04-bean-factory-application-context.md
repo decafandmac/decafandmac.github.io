@@ -12,7 +12,7 @@ comments: true
 
 ## Bean Factory 와 ApplicationContext
 
-![](/post-img/spring/bean_factory_hierarchy.PNG)
+![](/post-img/spring/bean_factory_hierarchy.png)
 
 `BeanFactory 는 스프링 컨테이너의 최상위 인터페이스`이다. 스프링 빈을 조회/관리하는 역할을 담당하고, getBean()을 제공한다.<br>
 하지만 어플리케이션을 개발할때에는 빈에 대한 조회/관리 이외에도 많은 기능을 필요로 한다.<br>
@@ -29,9 +29,9 @@ comments: true
 
 ## BeanDefinition
 
-![](/post-img/spring/beandefinition.PNG)
-![](/post-img/spring/beandefinition_1.PNG)
-![](/post-img/spring/beandefinition_2.PNG)
+![](/post-img/spring/beandefinition.png)
+![](/post-img/spring/beandefinition_1.png)
+![](/post-img/spring/beandefinition_2.png)
 
 AnnotationConfigApplicationContext는 `AnnotatedBeanDefinitaionReader`를 통해 <span style="color:red">`Bean 메타정보를 생성한다.(BeanDefinitionRegistry)`</span><br>
 스프링 컨테이너는 이 메타정보를 통해 Bean을 생성한다. 즉, Bean 을 생성하는 코드가 Java 인지 XML 인지 알 필요가 없다.<br>

@@ -1,6 +1,6 @@
-I"�<h2 id="bean-factory-와-applicationcontext">Bean Factory 와 ApplicationContext</h2>
+I"�<h2 id="bean-factory-와-applicationcontext">Bean Factory 와 ApplicationContext</h2>
 
-<p><img src="/post-img/spring/bean_factory_hierarchy.PNG" alt="" /></p>
+<p><img src="/post-img/spring/bean_factory_hierarchy.png" alt="" /></p>
 
 <p><code class="language-plaintext highlighter-rouge">BeanFactory 는 스프링 컨테이너의 최상위 인터페이스</code>이다. 스프링 빈을 조회/관리하는 역할을 담당하고, getBean()을 제공한다.<br />
 하지만 어플리케이션을 개발할때에는 빈에 대한 조회/관리 이외에도 많은 기능을 필요로 한다.<br />
@@ -31,12 +31,15 @@
 <p>BeanDefinition 에는 대략 아래와 같은 정보가 있다.</p>
 
 <ul>
-  <li>BeanClassName: 생성할 빈의 클래스 명(자바 설정 처럼 팩토리 역할의 빈을 사용하면 없음) factoryBeanName: 팩토리 역할의 빈을 사용할 경우 이름, 예) appConfig factoryMethodName: 빈을 생성할 팩토리 메서드 지정, 예) memberService</li>
+  <li>BeanClassName: 생성할 빈의 클래스 명(자바 설정 처럼 팩토리 역할의 빈을 사용하면 없음)</li>
+  <li>factoryBeanName: 팩토리 역할의 빈을 사용할 경우 이름, 예) appConfig</li>
+  <li>factoryMethodName: 빈을 생성할 팩토리 메서드 지정, 예) memberService</li>
   <li>Scope: 싱글톤(기본값)</li>
   <li>lazyInit: 스프링 컨테이너를 생성할 때 빈을 생성하는 것이 아니라, 실제 빈을 사용할 때 까지 최대한 생성을 지연처리 하는지 여부</li>
   <li>InitMethodName: 빈을 생성하고, 의존관계를 적용한 뒤에 호출되는 초기화 메서드 명</li>
   <li>DestroyMethodName: 빈의 생명주기가 끝나서 제거하기 직전에 호출되는 메서드 명</li>
-  <li>Constructor arguments, Properties: 의존관계 주입에서 사용한다. (자바 설정 처럼 팩토리 역할 의 빈을 사용하면 없음)</li>
+  <li>Constructor arguments, Properties: 의존관계 주입에서 사용한다. (자바 설정 처럼 팩토리 역할 의 빈을 사용하면 없음)
+<br /></li>
 </ul>
 
 <blockquote>
